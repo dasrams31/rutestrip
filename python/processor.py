@@ -27,6 +27,10 @@ os.environ['TRANSFORMERS_OFFLINE'] = '0'
 os.environ.setdefault('HF_HOME', HF_CACHE_DIR)
 os.environ.setdefault('SENTENCE_TRANSFORMERS_HOME', os.path.join(HF_CACHE_DIR, 'sentence-transformers'))
 os.environ.setdefault('TRANSFORMERS_CACHE', os.path.join(HF_CACHE_DIR, 'transformers'))
+os.environ.setdefault('TOKENIZERS_PARALLELISM', 'false')
+os.environ.setdefault('OMP_NUM_THREADS', '1')
+os.environ.setdefault('MKL_NUM_THREADS', '1')
+os.environ.setdefault('NUMEXPR_NUM_THREADS', '1')
 
 # Disable SSL verification issues on some Windows systems
 os.environ['CURL_CA_BUNDLE'] = ''

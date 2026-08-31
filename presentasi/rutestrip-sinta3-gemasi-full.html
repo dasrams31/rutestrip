@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RuteStrip | Presentasi SINTA 3 & GEMASI 2026</title>
+  <link rel="icon" href="../public/images/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --bg: #07110c;
+      --bg-2: #0c1810;
+      --surface: #102016;
+      --card: #142218;
+      --card-2: #1a2e22;
+      --line: #284e37;
+      --green: #22c55e;
+      --green-2: #86efac;
+      --green-3: #16a34a;
+      --text: #edfdf2;
+      --muted: #9cb8a6;
+      --blue: #60a5fa;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --purple: #a78bfa;
+      --shadow: 0 26px 90px rgba(0,0,0,.36);
+      --soft-shadow: 0 18px 42px rgba(0,0,0,.24);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 80% 10%, rgba(34,197,94,.16), transparent 26%),
+        radial-gradient(circle at 10% 12%, rgba(96,165,250,.08), transparent 28%),
+        linear-gradient(180deg, rgba(7,17,12,.45), rgba(7,17,12,.95));
+      z-index: -5;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 4px;
+      width: 0;
+      z-index: 50;
+      background: linear-gradient(90deg, var(--green), var(--green-2));
+      box-shadow: 0 0 30px rgba(34,197,94,.65);
+      transition: width .2s ease;
+    }
+
+    .slide {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 56px 82px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -4;
+      background:
+        linear-gradient(180deg, rgba(12,24,16,.86), rgba(7,17,12,.96)),
+        radial-gradient(circle at 78% 20%, rgba(34,197,94,.14), transparent 26%);
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: auto -7vw 0 -7vw;
+      height: 34vh;
+      z-index: -3;
+      background:
+        linear-gradient(135deg, transparent 36%, rgba(6,14,10,.98) 36% 58%, transparent 58%) 0 100% / 44% 100% no-repeat,
+        linear-gradient(45deg, transparent 35%, rgba(16,32,22,.95) 35% 61%, transparent 61%) 35% 100% / 54% 100% no-repeat,
+        linear-gradient(135deg, transparent 42%, rgba(31,58,46,.84) 42% 64%, transparent 64%) 98% 100% / 46% 84% no-repeat;
+      opacity: .95;
+      pointer-events: none;
+    }
+
+    .slide-content {
+      width: min(1180px, 100%);
+      position: relative;
+      z-index: 2;
+    }
+
+    .center { text-align: center; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(134,239,172,.34);
+      background: rgba(20,34,24,.86);
+      color: var(--green-2);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      box-shadow: 0 0 46px rgba(34,197,94,.08);
+    }
+
+    h1 {
+      margin-top: 24px;
+      font-size: clamp(4rem, 9vw, 8.2rem);
+      line-height: .9;
+      letter-spacing: -.045em;
+      color: var(--text);
+      text-shadow: 0 0 54px rgba(34,197,94,.18);
+    }
+
+    .brand-rute { color: var(--green); }
+
+    h2 {
+      font-size: clamp(2.35rem, 4.4vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -.025em;
+    }
+
+    h3 { font-size: 1.25rem; line-height: 1.25; }
+    p { color: var(--muted); font-size: 1.03rem; line-height: 1.7; }
+    .lead { max-width: 930px; margin: 22px auto 0; font-size: 1.28rem; color: #d4efdd; }
+    .small { font-size: .88rem; }
+    .highlight { color: var(--green-2); }
+    .mono { font-family: "JetBrains Mono", monospace; }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 34px;
+    }
+
+    .title-icon {
+      width: 62px;
+      height: 62px;
+      display: grid;
+      place-items: center;
+      color: var(--green);
+      border-radius: 20px;
+      border: 1px solid rgba(134,239,172,.24);
+      background: rgba(34,197,94,.12);
+      box-shadow: inset 0 0 24px rgba(34,197,94,.05);
+      flex: 0 0 auto;
+    }
+
+    .hero-orb {
+      width: 132px;
+      height: 132px;
+      display: grid;
+      place-items: center;
+      margin: 0 auto;
+      border-radius: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      color: var(--green);
+    }
+
+    .hero-orb svg { width: 72px; height: 72px; }
+
+    .brand-logo {
+      width: 132px;
+      height: 132px;
+      filter: drop-shadow(0 18px 32px rgba(34,197,94,.22));
+    }
+
+    .grid { display: grid; gap: 20px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      position: relative;
+      padding: 26px;
+      border-radius: var(--radius);
+      min-height: 176px;
+      background: linear-gradient(180deg, rgba(20,34,24,.96), rgba(12,24,16,.88));
+      border: 1px solid rgba(134,239,172,.18);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent, var(--green)), transparent 70%);
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 150px;
+      height: 150px;
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent, var(--green)) 14%, transparent);
+      filter: blur(2px);
+    }
+
+    .card h3 { color: var(--accent, var(--green-2)); margin-bottom: 12px; position: relative; z-index: 1; }
+    .card p, .card ul { position: relative; z-index: 1; }
+    .icon-box {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 16px;
+      border-radius: 15px;
+      background: color-mix(in srgb, var(--accent, var(--green)) 18%, transparent);
+      color: var(--accent, var(--green));
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat {
+      min-height: 142px;
+      text-align: center;
+      display: grid;
+      align-content: center;
+      padding: 22px;
+    }
+
+    .stat strong {
+      color: var(--accent, var(--green));
+      font-size: 2.9rem;
+      line-height: 1;
+      letter-spacing: -.06em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .stat span { margin-top: 10px; color: var(--muted); font-weight: 700; position: relative; z-index: 1; }
+
+    .profile-card {
+      margin: 36px auto 0;
+      width: min(850px, 100%);
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 14px;
+      padding: 16px;
+      border-radius: 28px;
+      background: rgba(20,34,24,.88);
+      border: 1px solid rgba(134,239,172,.22);
+      box-shadow: var(--shadow);
+    }
+
+    .profile-card > div {
+      padding: 20px;
+      border-radius: 21px;
+      background: rgba(7,17,12,.58);
+      border: 1px solid rgba(134,239,172,.1);
+    }
+
+    .timeline {
+      position: relative;
+      display: grid;
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .timeline-year {
+      display: grid;
+      place-items: center;
+      border-radius: 22px;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+      font-weight: 900;
+      box-shadow: var(--soft-shadow);
+      text-align: center;
+      padding: 0 12px;
+    }
+
+    .timeline-item .card {
+      min-height: 142px;
+      display: grid;
+      align-content: center;
+    }
+
+    .quote {
+      padding: 28px;
+      border-radius: var(--radius);
+      background: rgba(20,34,24,.86);
+      border: 1px solid rgba(134,239,172,.18);
+      border-left: 5px solid var(--green);
+      box-shadow: var(--shadow);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .step {
+      padding: 22px 18px;
+      min-height: 162px;
+      border-radius: 24px;
+      background: rgba(20,34,24,.9);
+      border: 1px solid rgba(134,239,172,.18);
+      box-shadow: var(--soft-shadow);
+    }
+
+    .step-num { font-family: "JetBrains Mono", monospace; color: var(--green); font-weight: 800; margin-bottom: 12px; }
+    .step h3 { font-size: 1rem; margin-bottom: 8px; color: var(--text); }
+    .step p { font-size: .88rem; line-height: 1.55; }
+
+    .architecture-flow {
+      display: grid;
+      gap: 18px;
+      padding: 22px;
+      border-radius: 28px;
+      background: rgba(7,17,12,.58);
+      border: 1px solid rgba(134,239,172,.18);
+      box-shadow: var(--shadow);
+    }
+
+    .arch-row {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      align-items: center;
+    }
+
+    .arch-row.compact { grid-template-columns: 1fr .9fr 1fr .9fr; }
+    .arch-row.final { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .arch-box {
+      min-height: 86px;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      text-align: center;
+      border-radius: 18px;
+      background: rgba(20,34,24,.92);
+      border: 1px solid rgba(134,239,172,.22);
+      color: #dff7e6;
+      font-size: .9rem;
+      font-weight: 800;
+      line-height: 1.35;
+      position: relative;
+    }
+
+    .arch-box::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      color: var(--green-2);
+      font-weight: 900;
+    }
+
+    .arch-box.no-arrow::after, .arch-row .arch-box:last-child::after { content: ""; }
+
+    .arch-db {
+      min-height: 112px;
+      border-radius: 999px / 34px;
+      background: linear-gradient(180deg, rgba(34,197,94,.18), rgba(20,34,24,.92));
+    }
+
+    .arch-end {
+      border-radius: 999px;
+      color: var(--bg);
+      background: linear-gradient(135deg, var(--green), var(--green-2));
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      border-radius: 26px;
+      overflow: hidden;
+      background: rgba(20,34,24,.9);
+      border: 1px solid rgba(134,239,172,.18);
+      box-shadow: var(--shadow);
+    }
+
+    .table th, .table td { padding: 14px 16px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .table th { color: var(--bg); background: linear-gradient(90deg, var(--green), var(--green-2)); font-weight: 900; }
+    .table td { color: #d7eadc; font-size: .96rem; }
+
+    .table.compact th, .table.compact td { padding: 10px 13px; }
+    .table.compact td { font-size: .84rem; line-height: 1.42; }
+    .table.compact .mono { color: var(--green-2); font-weight: 800; }
+
+    .formula {
+      padding: 30px;
+      border-radius: 28px;
+      text-align: center;
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(1.55rem, 3vw, 2.7rem);
+      color: var(--green-2);
+      background: rgba(7,17,12,.78);
+      border: 1px solid rgba(134,239,172,.22);
+      box-shadow: inset 0 0 46px rgba(34,197,94,.05), var(--shadow);
+    }
+
+    .code-path {
+      display: block;
+      margin-bottom: 10px;
+      font-family: "JetBrains Mono", monospace;
+      color: var(--green-2);
+      font-size: .82rem;
+      word-break: break-word;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+    .tag {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(34,197,94,.1);
+      border: 1px solid rgba(134,239,172,.2);
+      color: var(--green-2);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .footer-note, .slide-num {
+      position: absolute;
+      bottom: 24px;
+      z-index: 4;
+      font-size: .8rem;
+      font-weight: 800;
+    }
+
+    .footer-note { left: 82px; color: #5f7f6c; }
+    .slide-num { right: 82px; color: var(--green-2); font-family: "JetBrains Mono", monospace; }
+
+    .controls {
+      position: fixed;
+      right: 24px;
+      top: 18px;
+      z-index: 60;
+      display: flex;
+      gap: 10px;
+    }
+
+    .controls button {
+      cursor: pointer;
+      border: 1px solid rgba(134,239,172,.32);
+      background: rgba(20,34,24,.92);
+      color: var(--green-2);
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 900;
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      gap: 9px;
+      width: auto;
+      z-index: 55;
+    }
+
+    .nav button {
+      width: 10px;
+      height: 10px;
+      border: 1px solid rgba(134,239,172,.36);
+      border-radius: 999px;
+      background: rgba(134,239,172,.22);
+      cursor: pointer;
+      transition: .2s ease;
+    }
+
+    .nav button.active, .nav button:hover {
+      background: var(--green);
+      transform: scale(1.45);
+      box-shadow: 0 0 18px rgba(34,197,94,.52);
+    }
+
+    body.presenting { overflow: hidden; background: #020705; }
+    body.presenting .slide {
+      display: none;
+      min-height: 100vh;
+      height: 100vh;
+      padding: 52px 76px;
+    }
+    body.presenting .slide.active { display: grid; }
+    body.presenting .controls { opacity: .2; transition: .2s ease; }
+    body.presenting .controls:hover { opacity: 1; }
+
+    @media print {
+      .slide { page-break-after: always; min-height: 100vh; }
+      .controls, .nav, .progress { display: none; }
+    }
+
+    @media (max-width: 980px) {
+      .slide { padding: 48px 24px; }
+      .grid-2, .grid-3, .grid-4, .flow, .profile-card { grid-template-columns: 1fr; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .nav { display: none; }
+      .footer-note { left: 24px; }
+      .slide-num { right: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="nav" id="nav" aria-label="Slide navigation"></nav>
+
+  <main id="deck">
+    <section class="slide active">
+      <div class="slide-content center">
+        <div class="hero-orb"><img src="../public/images/logo.svg" alt="RuteStrip" class="brand-logo"></div>
+        <h1><span class="brand-rute">Rute</span>Strip</h1>
+        <p class="lead"><span class="brand-inline"><span>Rute</span>Strip</span> adalah sistem rekomendasi jalur pendakian yang membantu pengguna menemukan rute paling sesuai dengan kebutuhan perjalanan, melalui pengolahan data GPX dan pemahaman bahasa alami berbasis <span class="highlight">SBERT</span>.</p>
+        <div class="profile-card">
+          <div><h3>Rama Danadipa Putra Wijaya</h3><p>NIM 23.12.2956<br>Universitas Amikom Yogyakarta</p></div>
+          <div><h3>Riwayat Karya</h3><p>Juara 2 GEMASI 2026 Data Science<br>Paper SISTEMASI SINTA 3</p></div>
+        </div>
+      </div>
+      <span class="footer-note">RuteStrip presentation deck</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="list-checks"></i></div><h2>Agenda Presentasi</h2></div>
+        <div class="grid grid-4">
+          <article class="card stat" style="--accent: var(--green)"><strong>01</strong><span>Riwayat lomba</span></article>
+          <article class="card stat" style="--accent: var(--blue)"><strong>02</strong><span>Data artikel SINTA 3</span></article>
+          <article class="card stat" style="--accent: var(--yellow)"><strong>03</strong><span>Latar belakang proyek</span></article>
+          <article class="card stat" style="--accent: var(--purple)"><strong>04</strong><span>Tahapan algoritma</span></article>
+        </div>
+        <div class="quote" style="margin-top: 28px;"><p>Alurnya saya buat dari cerita besar dulu, baru masuk ke teknis. Jadi audiens bisa paham kenapa project ini dibuat, datanya dari mana, dan bagaimana algoritmanya bekerja.</p></div>
+      </div>
+      <span class="footer-note">Presentation structure</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="award"></i></div><h2>Riwayat</h2></div>
+        <div class="timeline">
+          <div class="timeline-item"><div class="timeline-year">GEMASI<br>2026</div><article class="card" style="--accent: var(--yellow)"><h3>Juara 2 Kategori Data Science</h3><p>Di lomba ini, RuteStrip saya bawakan sebagai solusi rekomendasi jalur pendakian yang memanfaatkan data GPX dan model AI untuk membaca preferensi pendaki.</p></article></div>
+          <div class="timeline-item"><div class="timeline-year">SINTA<br>3</div><article class="card" style="--accent: var(--blue)"><h3>Publikasi di SISTEMASI</h3><p>Hasil penelitian dari project ini juga sudah terbit di jurnal SISTEMASI, Volume 15 Nomor 4 Tahun 2026, halaman 1241-1256.</p></article></div>
+          <div class="timeline-item"><div class="timeline-year">DOI</div><article class="card" style="--accent: var(--green)"><h3>Identitas Publikasi</h3><p>https://doi.org/10.32520/stmsi.v15i4.6087</p></article></div>
+        </div>
+      </div>
+      <span class="footer-note">Academic & competition profile</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="newspaper"></i></div><h2>Data Artikel SINTA 3</h2></div>
+        <div class="grid grid-2">
+          <div class="quote"><p><span class="highlight">Judul artikel:</span><br>Sistem Rekomendasi Rute Pendakian Gunung menggunakan Content-Based Filtering berbasis SBERT dan Cosine Similarity.</p><p style="margin-top:18px"><span class="highlight">DOI:</span><br>https://doi.org/10.32520/stmsi.v15i4.6087</p></div>
+          <table class="table">
+            <tr><th>Komponen</th><th>Keterangan</th></tr>
+            <tr><td>Jurnal</td><td>Sistemasi: Jurnal Sistem Informasi</td></tr>
+            <tr><td>Akreditasi</td><td>SINTA 3</td></tr>
+            <tr><td>Volume</td><td>15, Nomor 4, 2026</td></tr>
+            <tr><td>Halaman</td><td>1241-1256</td></tr>
+            <tr><td>Received</td><td>18 Januari 2026</td></tr>
+            <tr><td>Accepted</td><td>8 April 2026</td></tr>
+          </table>
+        </div>
+      </div>
+      <span class="footer-note">SISTEMASI article metadata</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="alert-triangle"></i></div><h2>Latar Belakang Pengembangan</h2></div>
+        <div class="grid grid-3">
+          <article class="card" style="--accent: var(--red)"><div class="icon-box"><i data-lucide="messages-square"></i></div><h3>Informasi Jalur Masih Terpisah</h3><p>Banyak informasi pendakian tersebar di media sosial, forum, dan cerita teman. Masalahnya, informasi seperti ini sering subjektif dan susah dibandingkan.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><div class="icon-box"><i data-lucide="heart-pulse"></i></div><h3>Pemilihan Jalur Bisa Berisiko</h3><p>Kalau pendaki salah memilih jalur, misalnya terlalu curam atau terlalu panjang, dampaknya bisa ke fisik, waktu tempuh, bahkan keselamatan.</p></article>
+          <article class="card" style="--accent: var(--green)"><div class="icon-box"><i data-lucide="search-check"></i></div><h3>Pencarian Harus Lebih Natural</h3><p>Saya ingin pengguna bisa mengetik seperti biasa, contohnya “jalur landai untuk pemula”, lalu sistem memahami maksudnya.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Why the project exists</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="scan-search"></i></div><h2>Research Gap & Arah Solusi</h2></div>
+        <div class="grid grid-2">
+          <article class="card" style="--accent: var(--red)"><h3>Keterbatasan Cara Lama</h3><p>Metode berbasis kata kunci seperti TF-IDF cukup berguna, tapi sering hanya melihat kata yang sama. Padahal pengguna bisa memakai kalimat berbeda dengan maksud yang sama.</p><div class="tag-row"><span class="tag">keyword-based</span><span class="tag">literal matching</span><span class="tag">low semantic context</span></div></article>
+          <article class="card" style="--accent: var(--green)"><h3>Yang Saya Usulkan</h3><p>RuteStrip memakai SBERT untuk mengubah query dan deskripsi rute menjadi vektor makna. Setelah itu, sistem mencari rute yang paling dekat secara konteks.</p><div class="tag-row"><span class="tag">semantic embedding</span><span class="tag">content-based</span><span class="tag">GPX data fusion</span></div></article>
+        </div>
+      </div>
+      <span class="footer-note">From keyword search to semantic recommendation</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="workflow"></i></div><h2>Alur Sistem Rekomendasi</h2></div>
+        <div class="architecture-flow">
+          <div class="arch-row">
+            <div class="arch-box">Data Spasial GPX &<br>Data Literatur Teks</div>
+            <div class="arch-box">Ekstraksi GPX ke<br>Narasi Teks</div>
+            <div class="arch-box">Fusi Data<br>Penggabungan Korpus</div>
+            <div class="arch-box no-arrow">Preprocessing<br>Cleaning & Case Folding</div>
+          </div>
+          <div class="arch-row compact">
+            <div class="arch-box">Embedding SBERT<br>Model Multilingual</div>
+            <div class="arch-box arch-db">Simpan<br>Vektor Jalur</div>
+            <div class="arch-box">Preprocessing &<br>Embedding Query</div>
+            <div class="arch-box no-arrow">Query Preferensi<br>Pengguna</div>
+          </div>
+          <div class="arch-row final">
+            <div class="arch-box">Perhitungan<br>Cosine Similarity</div>
+            <div class="arch-box">Perankingan Skor<br>Tertinggi Top-N</div>
+            <div class="arch-box">Daftar Rekomendasi<br>Jalur Pendakian</div>
+            <div class="arch-box arch-end no-arrow">SELESAI</div>
+          </div>
+        </div>
+        <p class="lead center">Intinya, data jalur diproses dulu menjadi embedding. Saat pengguna mencari, sistem tinggal membandingkan query dengan data yang sudah siap.</p>
+      </div>
+      <span class="footer-note">Recommendation architecture</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="database"></i></div><h2>Dataset & Data Fusion</h2></div>
+        <div class="grid grid-4">
+          <article class="card stat" style="--accent: var(--green)"><strong>39</strong><span>jalur evaluasi paper</span></article>
+          <article class="card stat" style="--accent: var(--blue)"><strong>117</strong><span>file GPX mentah lokal</span></article>
+          <article class="card stat" style="--accent: var(--yellow)"><strong>21</strong><span>route aktif lokal</span></article>
+          <article class="card stat" style="--accent: var(--purple)"><strong>384</strong><span>dimensi embedding</span></article>
+        </div>
+        <div class="grid grid-2" style="margin-top:26px">
+          <div class="quote"><p>Supaya model tidak hanya membaca angka, data GPX saya ubah menjadi narasi. Narasi ini digabung dengan deskripsi jalur seperti vegetasi, sumber air, panorama, dan tips pendakian.</p></div>
+          <article class="card" style="--accent: var(--blue)"><div class="icon-box"><i data-lucide="cloud-download"></i></div><h3>Publikasi Dataset Kaggle</h3><p>Dataset juga dipublikasikan sebagai <span class="highlight">Indonesian Hiking Routes GPX and SBERT Embeddings</span>, berisi statistik rute, teks naratif, embedding SBERT 384 dimensi, dan data dictionary dengan lisensi CC BY-SA 4.0.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Dataset and fusion strategy</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="route"></i></div><h2>Tahap 1: Ekstraksi GPX</h2></div>
+        <div class="grid grid-2">
+          <table class="table">
+            <tr><th>Atribut</th><th>Rumus / Metode</th></tr>
+            <tr><td>Jarak tempuh</td><td>gpx.length_3d()</td></tr>
+            <tr><td>Kenaikan elevasi</td><td>Σ(eleᵢ - eleᵢ₋₁), untuk nilai positif</td></tr>
+            <tr><td>Durasi Naismith</td><td>(Jarak / 5) + (Elevasi / 600)</td></tr>
+            <tr><td>Grade rata-rata</td><td>Elevasi / (Jarak × 1000) × 100</td></tr>
+            <tr><td>Koordinat</td><td>Sampling trackpoint untuk visualisasi peta</td></tr>
+          </table>
+          <article class="card" style="--accent: var(--green)"><div class="icon-box"><i data-lucide="map"></i></div><h3>Output Ekstraksi</h3><p>Dari GPX, sistem mengambil jarak, total kenaikan elevasi, estimasi durasi, grade kemiringan, koordinat rute, label kesulitan, dan narasi otomatis.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Algorithm phase 1</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="text-cursor-input"></i></div><h2>Tahap 2: Preprocessing Teks</h2></div>
+        <div class="grid grid-3">
+          <article class="card" style="--accent: var(--blue)"><div class="icon-box"><i data-lucide="eraser"></i></div><h3>Data Cleaning</h3><p>Regex menghapus URL, simbol, karakter non-relevan, angka berdiri sendiri, dan whitespace berlebih.</p></article>
+          <article class="card" style="--accent: var(--green)"><div class="icon-box"><i data-lucide="case-sensitive"></i></div><h3>Case Folding</h3><p>Semua teks dinormalisasi menjadi huruf kecil agar variasi kapital tidak memecah representasi kata.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><div class="icon-box"><i data-lucide="filter"></i></div><h3>Selective Stopword</h3><p>Kata umum dihapus, tetapi negasi dan kata domain seperti mudah, sulit, landai, curam, pemula tetap dipertahankan.</p></article>
+        </div>
+        <div class="quote" style="margin-top:26px"><p>Di sini saya tidak memakai stemming. Alasannya, SBERT membaca konteks kalimat, jadi bentuk kata seperti “pendakian” masih punya informasi yang berguna.</p></div>
+      </div>
+      <span class="footer-note">Algorithm phase 2</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="brain-circuit"></i></div><h2>Tahap 3: SBERT Embedding</h2></div>
+        <div class="grid grid-2">
+          <article class="card" style="--accent: var(--green)"><div class="icon-box"><i data-lucide="box"></i></div><h3>Model yang Dipakai</h3><p>paraphrase-multilingual-MiniLM-L12-v2<br>Arsitektur Transformer 12 layers<br>Output embedding 384 dimensi<br>Mendukung 50+ bahasa termasuk Indonesia</p></article>
+          <div class="quote"><p>SBERT membantu sistem membaca makna kalimat. Jadi, saat pengguna menulis “jalur landai”, sistem bisa mengaitkannya dengan rute yang narasinya menyebut “cocok untuk pemula”.</p></div>
+        </div>
+      </div>
+      <span class="footer-note">Algorithm phase 3</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content center">
+        <div class="title-row" style="justify-content:center"><div class="title-icon"><i data-lucide="target"></i></div><h2>Tahap 4: Cosine Similarity</h2></div>
+        <div class="formula">Sim(Q, D) = (Q · D) / (||Q|| × ||D||)</div>
+        <div class="grid grid-3" style="margin-top:26px;text-align:left">
+          <article class="card" style="--accent: var(--blue)"><h3>Q</h3><p>Vektor dari query pengguna, misalnya “jalur landai dengan jarak pendek”.</p></article>
+          <article class="card" style="--accent: var(--green)"><h3>D</h3><p>Vektor dari setiap rute yang sudah punya narasi hasil olahan data GPX dan deskripsi.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><h3>Ranking</h3><p>Skor tertinggi dianggap paling cocok, lalu ditampilkan sebagai rekomendasi teratas.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Algorithm phase 4</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="test-tube-2"></i></div><h2>Skenario Evaluasi</h2></div>
+        <table class="table">
+          <tr><th>Skenario</th><th>Query</th><th>Tujuan Uji</th></tr>
+          <tr><td>Kesulitan</td><td>jalur mudah untuk pemula</td><td>Menguji pemahaman level dan beginner-friendly route</td></tr>
+          <tr><td>Atribut fisik</td><td>trek menantang elevasi tinggi</td><td>Menguji kemampuan membaca tantangan dan elevasi</td></tr>
+          <tr><td>Durasi</td><td>pendakian singkat 2-3 jam</td><td>Menguji keterbatasan semantic-only untuk constraint numerik</td></tr>
+          <tr><td>Kontekstual</td><td>gunung dengan sabana dan sunrise</td><td>Menguji relasi semantik implisit pada fitur jalur</td></tr>
+        </table>
+      </div>
+      <span class="footer-note">Evaluation scenarios</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="bar-chart-3"></i></div><h2>Hasil Evaluasi Paper</h2></div>
+        <div class="grid grid-4">
+          <article class="card stat" style="--accent: var(--green)"><strong>0,60</strong><span>Precision@5 SBERT</span></article>
+          <article class="card stat" style="--accent: var(--red)"><strong>0,25</strong><span>Precision@5 TF-IDF</span></article>
+          <article class="card stat" style="--accent: var(--yellow)"><strong>+140%</strong><span>peningkatan performa</span></article>
+          <article class="card stat" style="--accent: var(--blue)"><strong>1,00</strong><span>P@5 query kontekstual</span></article>
+        </div>
+        <div class="quote" style="margin-top:26px"><p>Hasil ini menunjukkan bahwa SBERT lebih kuat untuk query yang bahasanya natural. Contohnya saat pengguna mencari “sabana dan sunrise”, sistem masih bisa menemukan rute yang secara konteks mirip.</p></div>
+      </div>
+      <span class="footer-note">Research result</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="blocks"></i></div><h2>Implementasi Project</h2></div>
+        <div class="grid grid-3">
+          <article class="card" style="--accent: var(--green)"><div class="icon-box"><i data-lucide="server"></i></div><h3>Laravel App</h3><p>Routing, Blade UI, upload GPX, auth, dashboard admin, penyimpanan route, embedding, dan provenance.</p></article>
+          <article class="card" style="--accent: var(--blue)"><div class="icon-box"><i data-lucide="bot"></i></div><h3>Python Processor</h3><p>FastAPI, gpxpy, sentence-transformers, SBERT embedding, ekstraksi GPX, dan semantic search.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><div class="icon-box"><i data-lucide="cloud"></i></div><h3>Deploy Hybrid</h3><p>Laravel dapat berjalan di cPanel/VPS, sedangkan Python processor dapat dipisah ke Hugging Face Space.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">System implementation</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="github"></i></div><h2>Processor.py: Fungsi Inti</h2></div>
+        <table class="table compact">
+          <tr><th>Fungsi</th><th>Peran di Sistem</th><th>Output Utama</th></tr>
+          <tr><td><span class="mono">preprocess_text()</span></td><td>Membersihkan query atau narasi: hapus noise, lowercase, dan stopword selektif.</td><td>Teks siap embedding.</td></tr>
+          <tr><td><span class="mono">get_local_model_path()</span></td><td>Mengecek apakah model SBERT sudah tersedia di cache lokal HuggingFace.</td><td>Path model lokal atau kosong.</td></tr>
+          <tr><td><span class="mono">get_model()</span></td><td>Memuat model <span class="mono">paraphrase-multilingual-MiniLM-L12-v2</span> sekali saja, lalu dipakai ulang.</td><td>Instance SBERT cached.</td></tr>
+          <tr><td><span class="mono">parse_gpx()</span></td><td>Membaca file GPX, smoothing elevasi, lalu mengambil latitude, longitude, elevasi, dan waktu.</td><td>Objek GPX dan track points.</td></tr>
+          <tr><td><span class="mono">calculate_statistics()</span></td><td>Menghitung jarak, elevation gain, durasi Naismith, grade rata-rata, range elevasi, dan kesulitan.</td><td>Statistik rute.</td></tr>
+          <tr><td><span class="mono">generate_narrative()</span></td><td>Mengubah angka statistik menjadi narasi manusiawi agar bisa dibaca oleh SBERT.</td><td>Narasi jalur pendakian.</td></tr>
+          <tr><td><span class="mono">generate_embedding()</span></td><td>Mengubah teks narasi atau query menjadi vektor makna 384 dimensi.</td><td>Embedding SBERT.</td></tr>
+        </table>
+      </div>
+      <span class="footer-note">python/processor.py core functions</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="terminal-square"></i></div><h2>Processor.py: Mode Eksekusi</h2></div>
+        <table class="table compact">
+          <tr><th>Fungsi</th><th>Alur Kerja</th><th>Dipakai Saat</th></tr>
+          <tr><td><span class="mono">mode_ingest()</span></td><td>Menjalankan pipeline GPX: parse file, hitung statistik, buat narasi, buat embedding, dan sederhanakan koordinat peta.</td><td>Admin upload GPX baru.</td></tr>
+          <tr><td><span class="mono">mode_search()</span></td><td>Preprocess query, buat embedding query, bandingkan dengan embedding tiap rute memakai cosine similarity, lalu urutkan skor tertinggi.</td><td>User mencari rekomendasi rute.</td></tr>
+          <tr><td><span class="mono">mode_embed()</span></td><td>Mode cepat untuk membuat embedding dari teks saja, tanpa membaca file GPX atau menghitung rute.</td><td>Endpoint <span class="mono">/embed</span> dan pencarian cepat.</td></tr>
+          <tr><td><span class="mono">main()</span></td><td>Membaca argument CLI <span class="mono">--mode</span>, <span class="mono">--gpx</span>, <span class="mono">--query</span>, dan <span class="mono">--data</span>, lalu mengembalikan JSON.</td><td>Processor dipanggil sebagai script.</td></tr>
+          <tr><td><span class="mono">get_gpxpy()</span>, <span class="mono">get_numpy()</span>, <span class="mono">get_cosine_similarity()</span></td><td>Lazy import dependency supaya startup lebih ringan dan error dependency lebih mudah dilacak.</td><td>Support function.</td></tr>
+        </table>
+        <div class="quote" style="margin-top:22px"><p>Intinya, <span class="highlight">processor.py</span> adalah mesin rekomendasi: GPX diubah menjadi statistik dan narasi, narasi diubah menjadi embedding, lalu query pengguna dibandingkan dengan embedding rute.</p></div>
+      </div>
+      <span class="footer-note">python/processor.py execution modes</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content">
+        <div class="title-row"><div class="title-icon"><i data-lucide="sparkles"></i></div><h2>Kontribusi & Dampak</h2></div>
+        <div class="grid grid-2">
+          <article class="card" style="--accent: var(--green)"><h3>Kontribusi Akademik</h3><p>Project ini menunjukkan bagaimana SBERT bisa dipakai untuk rekomendasi jalur pendakian, terutama ketika data GPX digabung dengan narasi deskriptif.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><h3>Kontribusi Produk</h3><p>RuteStrip membantu pendaki memilih rute dengan cara yang lebih natural, cukup mengetik kebutuhan atau preferensi mereka.</p></article>
+          <article class="card" style="--accent: var(--blue)"><h3>Nilai Portofolio</h3><p>Karya ini punya validasi dari dua sisi: kompetisi GEMASI 2026 dan publikasi jurnal SISTEMASI SINTA 3.</p></article>
+          <article class="card" style="--accent: var(--purple)"><h3>Pengembangan Lanjut</h3><p>Ke depan, sistem bisa ditambah data cuaca, kondisi jalur real-time, fine-tuning model, dan kontribusi data dari komunitas pendaki.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Contribution and future direction</span><span class="slide-num"></span>
+    </section>
+
+    <section class="slide">
+      <div class="slide-content center">
+        <div class="hero-orb"><img src="../public/images/logo.svg" alt="RuteStrip" class="brand-logo"></div>
+        <h2>Rute yang tepat dimulai dari data yang dipahami dengan tepat.</h2>
+        <p class="lead">RuteStrip berangkat dari masalah sederhana: pendaki butuh rute yang sesuai kemampuan dan preferensi mereka. Dengan menggabungkan data GPX, narasi jalur, SBERT, dan cosine similarity, sistem ini mencoba membuat proses memilih rute menjadi lebih mudah, lebih objektif, dan lebih relevan.</p>
+      </div>
+      <span class="footer-note">Thank you</span><span class="slide-num"></span>
+    </section>
+  </main>
+
+  <div class="controls">
+    <button id="prev">← Prev</button>
+    <button id="present">Fullscreen</button>
+    <button id="next">Next →</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const slides = [...document.querySelectorAll('.slide')];
+    const nav = document.getElementById('nav');
+    const progress = document.getElementById('progress');
+    let current = 0;
+
+    slides.forEach((slide, index) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.ariaLabel = `Slide ${index + 1}`;
+      dot.addEventListener('click', () => go(index, true));
+      nav.appendChild(dot);
+      slide.querySelector('.slide-num').textContent = `${String(index + 1).padStart(2, '0')}/${String(slides.length).padStart(2, '0')}`;
+    });
+
+    function go(index, scroll = false) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      [...nav.children].forEach((dot, i) => dot.classList.toggle('active', i === current));
+      progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+      if (scroll && !document.body.classList.contains('presenting')) slides[current].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function detectCurrentFromScroll() {
+      if (document.body.classList.contains('presenting')) return;
+      const mid = window.scrollY + window.innerHeight / 2;
+      const idx = slides.findIndex(slide => mid >= slide.offsetTop && mid < slide.offsetTop + slide.offsetHeight);
+      if (idx >= 0) go(idx);
+    }
+
+    async function present() {
+      document.body.classList.add('presenting');
+      go(current);
+      try {
+        if (!document.fullscreenElement) await document.documentElement.requestFullscreen();
+      } catch (_) {}
+    }
+
+    function exitPresent() {
+      document.body.classList.remove('presenting');
+      try { if (document.fullscreenElement) document.exitFullscreen(); } catch (_) {}
+      slides[current].scrollIntoView({ behavior: 'smooth' });
+    }
+
+    document.getElementById('prev').onclick = () => go(current - 1, true);
+    document.getElementById('next').onclick = () => go(current + 1, true);
+    document.getElementById('present').onclick = () => document.body.classList.contains('presenting') ? exitPresent() : present();
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') { event.preventDefault(); go(current + 1, true); }
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') { event.preventDefault(); go(current - 1, true); }
+      if (event.key === 'Home') { event.preventDefault(); go(0, true); }
+      if (event.key === 'End') { event.preventDefault(); go(slides.length - 1, true); }
+      if (event.key === 'Escape') exitPresent();
+    });
+
+    document.addEventListener('fullscreenchange', () => {
+      if (!document.fullscreenElement) document.body.classList.remove('presenting');
+    });
+
+    window.addEventListener('scroll', detectCurrentFromScroll, { passive: true });
+    go(0);
+  </script>
+</body>
+</html>

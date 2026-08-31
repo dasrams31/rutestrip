@@ -35,4 +35,12 @@ CLAUDE.md
 GEMINI.md
 .github/hooks/
 .github/copilot-instructions.md
+.playwright-mcp/
+__pycache__/
+*.pyc
+/artifacts
+/cache
+/colab/storage
+
+
 

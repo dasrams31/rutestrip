@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RuteStrip - Presentasi SINTA 3 & GEMASI 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --primary: #22c55e;
+      --primary-2: #86efac;
+      --primary-dark: #16a34a;
+      --forest-950: #07110c;
+      --forest-900: #0c1810;
+      --forest-850: #102016;
+      --forest-800: #142218;
+      --forest-700: #1a2e22;
+      --forest-600: #284e37;
+      --text: #e8f5ec;
+      --muted: #9cb8a6;
+      --blue: #60a5fa;
+      --yellow: #fbbf24;
+      --red: #f87171;
+      --shadow: 0 24px 80px rgba(0, 0, 0, .34);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      background: var(--forest-950);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    .progress {
+      position: fixed;
+      inset: 0 auto auto 0;
+      width: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      z-index: 20;
+      box-shadow: 0 0 24px rgba(34, 197, 94, .5);
+    }
+
+    .nav {
+      position: fixed;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      gap: 10px;
+      z-index: 10;
+    }
+
+    .nav a {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(134, 239, 172, .24);
+      border: 1px solid rgba(134, 239, 172, .36);
+      transition: .2s ease;
+    }
+
+    .nav a.active, .nav a:hover {
+      background: var(--primary);
+      transform: scale(1.45);
+      box-shadow: 0 0 18px rgba(34, 197, 94, .5);
+    }
+
+    .slide {
+      position: relative;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 64px 84px;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 86% 12%, rgba(34, 197, 94, .16), transparent 28%),
+        radial-gradient(circle at 16% 18%, rgba(96, 165, 250, .08), transparent 30%),
+        linear-gradient(180deg, var(--forest-900), var(--forest-950));
+      z-index: -3;
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      inset: auto -8% 0 -8%;
+      height: 38vh;
+      background:
+        linear-gradient(135deg, transparent 38%, rgba(7, 17, 12, .95) 38% 58%, transparent 58%) 0 100% / 44% 100% no-repeat,
+        linear-gradient(45deg, transparent 35%, rgba(16, 32, 22, .92) 35% 60%, transparent 60%) 38% 100% / 52% 100% no-repeat,
+        linear-gradient(135deg, transparent 42%, rgba(24, 50, 34, .82) 42% 63%, transparent 63%) 95% 100% / 42% 82% no-repeat;
+      opacity: .9;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .slide-content { width: min(1160px, 100%); position: relative; z-index: 1; }
+    .center { text-align: center; }
+
+    .kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 18px;
+      border: 1px solid rgba(134, 239, 172, .38);
+      border-radius: 999px;
+      background: rgba(20, 34, 24, .8);
+      color: var(--primary-2);
+      font-size: .78rem;
+      font-weight: 800;
+      letter-spacing: .11em;
+      text-transform: uppercase;
+      box-shadow: 0 0 32px rgba(34, 197, 94, .08);
+    }
+
+    h1 {
+      margin-top: 22px;
+      font-size: clamp(3.5rem, 8vw, 7.6rem);
+      line-height: .93;
+      letter-spacing: -.075em;
+      color: var(--primary);
+      text-shadow: 0 0 44px rgba(34, 197, 94, .17);
+    }
+
+    h2 {
+      margin-top: 18px;
+      font-size: clamp(2.1rem, 4vw, 4.4rem);
+      line-height: 1.02;
+      letter-spacing: -.055em;
+    }
+
+    h3 { font-size: 1.35rem; line-height: 1.25; }
+    p { color: var(--muted); font-size: 1.05rem; line-height: 1.75; }
+    .lead { margin: 22px auto 0; max-width: 860px; font-size: 1.34rem; color: #cde8d6; }
+    .highlight { color: var(--primary-2); }
+
+    .hero-orb {
+      width: 126px;
+      height: 126px;
+      margin: 0 auto 10px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(34, 197, 94, .24), rgba(34, 197, 94, .06));
+      border: 1px solid rgba(134, 239, 172, .22);
+      box-shadow: 0 0 80px rgba(34, 197, 94, .12);
+    }
+
+    .hero-orb svg { width: 70px; height: 70px; color: var(--primary); }
+
+    .author-card {
+      margin: 38px auto 0;
+      width: min(760px, 100%);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 16px;
+      background: rgba(20, 34, 24, .86);
+      border: 1px solid rgba(134, 239, 172, .22);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .author-card div {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(12, 24, 16, .72);
+      border: 1px solid rgba(134, 239, 172, .12);
+    }
+
+    .grid { display: grid; gap: 22px; }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .card {
+      position: relative;
+      min-height: 190px;
+      padding: 28px;
+      border-radius: 26px;
+      background: linear-gradient(180deg, rgba(20, 34, 24, .94), rgba(12, 24, 16, .88));
+      border: 1px solid rgba(134, 239, 172, .18);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent, var(--primary)), transparent);
+    }
+
+    .card h3 { color: var(--accent, var(--primary-2)); margin-bottom: 12px; }
+    .card .icon {
+      width: 46px;
+      height: 46px;
+      margin-bottom: 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 15px;
+      background: color-mix(in srgb, var(--accent, var(--primary)) 18%, transparent);
+      color: var(--accent, var(--primary));
+    }
+
+    .stat {
+      min-height: 150px;
+      text-align: center;
+      display: grid;
+      align-content: center;
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--accent, var(--primary));
+      font-size: 3rem;
+      line-height: 1;
+      letter-spacing: -.055em;
+    }
+
+    .stat span { margin-top: 10px; color: var(--muted); font-weight: 700; }
+
+    .section-title {
+      margin-bottom: 38px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .section-title .mark {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(34, 197, 94, .13);
+      color: var(--primary);
+      border: 1px solid rgba(134, 239, 172, .2);
+    }
+
+    .section-title h2 { margin: 0; font-size: clamp(2.2rem, 4vw, 3.9rem); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .flow .step {
+      padding: 22px 18px;
+      min-height: 160px;
+      border-radius: 22px;
+      background: rgba(20, 34, 24, .92);
+      border: 1px solid rgba(134, 239, 172, .2);
+      position: relative;
+    }
+
+    .step-num { font-family: "JetBrains Mono", monospace; color: var(--primary); font-weight: 800; margin-bottom: 14px; }
+    .step h3 { font-size: 1rem; margin-bottom: 8px; color: #dff8e7; }
+    .step p { font-size: .88rem; line-height: 1.55; }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 24px;
+      background: rgba(20, 34, 24, .9);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(134, 239, 172, .18);
+    }
+
+    .table th, .table td { padding: 16px 18px; text-align: left; border-bottom: 1px solid rgba(255,255,255,.06); }
+    .table th { color: var(--forest-950); background: linear-gradient(90deg, var(--primary), var(--primary-2)); font-weight: 800; }
+    .table td { color: #d7eadc; }
+
+    .formula {
+      margin: 24px 0;
+      padding: 28px;
+      border-radius: 24px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(1.4rem, 2.4vw, 2.4rem);
+      color: var(--primary-2);
+      background: rgba(7, 17, 12, .78);
+      border: 1px solid rgba(134, 239, 172, .2);
+      text-align: center;
+      box-shadow: inset 0 0 40px rgba(34, 197, 94, .04), var(--shadow);
+    }
+
+    .quote {
+      padding: 32px;
+      border-left: 5px solid var(--primary);
+      border-radius: 24px;
+      background: rgba(20, 34, 24, .82);
+      box-shadow: var(--shadow);
+    }
+
+    .footer-note {
+      position: absolute;
+      left: 84px;
+      bottom: 28px;
+      color: #5f7f6c;
+      font-size: .82rem;
+      font-weight: 700;
+      z-index: 2;
+    }
+
+    .slide-num {
+      position: absolute;
+      right: 84px;
+      bottom: 28px;
+      color: var(--primary-2);
+      font-family: "JetBrains Mono", monospace;
+      font-size: .82rem;
+      font-weight: 800;
+      z-index: 2;
+    }
+
+    .controls {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      display: flex;
+      gap: 10px;
+      z-index: 30;
+    }
+
+    .controls button {
+      border: 1px solid rgba(134, 239, 172, .32);
+      background: rgba(20, 34, 24, .92);
+      color: var(--primary-2);
+      border-radius: 14px;
+      padding: 11px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+    }
+
+    body.presenting { overflow: hidden; }
+    body.presenting .slide { display: none; min-height: 100vh; }
+    body.presenting .slide.active { display: grid; }
+
+    @media (max-width: 900px) {
+      .slide { padding: 54px 24px; }
+      .grid-2, .grid-3, .grid-4, .flow, .author-card { grid-template-columns: 1fr; }
+      .nav { display: none; }
+      .footer-note { left: 24px; }
+      .slide-num { right: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress" id="progress"></div>
+  <nav class="nav" id="nav"></nav>
+
+  <main>
+    <section class="slide active" id="slide-1">
+      <div class="slide-content center">
+        <div class="hero-orb"><i data-lucide="mountain-snow"></i></div>
+        <div class="kicker"><i data-lucide="trophy"></i> SINTA 3 + GEMASI 2026</div>
+        <h1>RuteStrip</h1>
+        <p class="lead">Sistem rekomendasi rute pendakian gunung berbasis <span class="highlight">SBERT</span>, Content-Based Filtering, dan Cosine Similarity.</p>
+        <div class="author-card">
+          <div><h3>Rama Danadipa Putra Wijaya</h3><p>NIM 23.12.2956</p></div>
+          <div><h3>Rekam Jejak</h3><p>Juara 2 GEMASI 2026 Data Science<br>Paper SISTEMASI SINTA 3</p></div>
+        </div>
+      </div>
+      <span class="footer-note">RuteStrip | Presentation Deck</span><span class="slide-num">01/12</span>
+    </section>
+
+    <section class="slide" id="slide-2">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="id-card"></i></div><h2>Identitas & Riwayat</h2></div>
+        <div class="grid grid-3">
+          <article class="card" style="--accent: var(--primary)"><div class="icon"><i data-lucide="user"></i></div><h3>Identitas</h3><p>Rama Danadipa Putra Wijaya<br>NIM 23.12.2956<br>Program Studi Sistem Informasi</p></article>
+          <article class="card" style="--accent: var(--yellow)"><div class="icon"><i data-lucide="award"></i></div><h3>Kompetisi</h3><p>GEMASI 2026<br>Kategori Data Science<br>Capaian: Juara 2</p></article>
+          <article class="card" style="--accent: var(--blue)"><div class="icon"><i data-lucide="book-open-check"></i></div><h3>Publikasi</h3><p>SISTEMASI, SINTA 3<br>Volume 15 Nomor 4, 2026<br>DOI: 10.32520/stmsi.v15i4.6087</p></article>
+        </div>
+      </div>
+      <span class="footer-note">RuteStrip | Academic & Competition Track</span><span class="slide-num">02/12</span>
+    </section>
+
+    <section class="slide" id="slide-3">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="newspaper"></i></div><h2>Data Artikel</h2></div>
+        <div class="grid grid-2">
+          <div class="quote">
+            <p><span class="highlight">Judul:</span> Sistem Rekomendasi Rute Pendakian Gunung menggunakan Content-Based Filtering berbasis SBERT dan Cosine Similarity.</p>
+            <p style="margin-top: 18px;"><span class="highlight">Jurnal:</span> Sistemasi: Jurnal Sistem Informasi, Vol. 15 No. 4, 2026, hlm. 1241-1256.</p>
+          </div>
+          <table class="table">
+            <tr><th>Komponen</th><th>Data</th></tr>
+            <tr><td>Received</td><td>18 Januari 2026</td></tr>
+            <tr><td>Accepted</td><td>8 April 2026</td></tr>
+            <tr><td>Dataset paper</td><td>39 jalur pendakian Pulau Jawa</td></tr>
+            <tr><td>Model</td><td>SBERT multilingual MiniLM-L12-v2</td></tr>
+            <tr><td>Evaluasi</td><td>Precision@K dan baseline TF-IDF</td></tr>
+          </table>
+        </div>
+      </div>
+      <span class="footer-note">SISTEMASI SINTA 3</span><span class="slide-num">03/12</span>
+    </section>
+
+    <section class="slide" id="slide-4">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="alert-triangle"></i></div><h2>Latar Belakang</h2></div>
+        <div class="grid grid-3">
+          <article class="card" style="--accent: var(--red)"><div class="icon"><i data-lucide="messages-square"></i></div><h3>Informasi Tersebar</h3><p>Referensi jalur banyak berasal dari forum, media sosial, atau pengalaman personal yang sulit dibandingkan secara objektif.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><div class="icon"><i data-lucide="activity"></i></div><h3>Risiko Tidak Cocok</h3><p>Ketidaksesuaian kemampuan pendaki dengan karakter jalur dapat meningkatkan risiko kelelahan dan keterlambatan.</p></article>
+          <article class="card" style="--accent: var(--primary)"><div class="icon"><i data-lucide="brain"></i></div><h3>Butuh Makna</h3><p>Query seperti “jalur landai untuk pemula” perlu dipahami sebagai konteks, bukan sekadar kata kunci.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Problem Framing</span><span class="slide-num">04/12</span>
+    </section>
+
+    <section class="slide" id="slide-5">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="sparkles"></i></div><h2>Konsep Solusi</h2></div>
+        <div class="flow">
+          <div class="step"><div class="step-num">01</div><h3>GPX Input</h3><p>Trackpoint, koordinat, elevasi, dan lintasan jalur.</p></div>
+          <div class="step"><div class="step-num">02</div><h3>Feature Extraction</h3><p>Jarak, elevasi, grade, durasi Naismith.</p></div>
+          <div class="step"><div class="step-num">03</div><h3>Data Fusion</h3><p>Atribut numerik diubah ke narasi jalur.</p></div>
+          <div class="step"><div class="step-num">04</div><h3>SBERT</h3><p>Narasi dan query menjadi embedding.</p></div>
+          <div class="step"><div class="step-num">05</div><h3>Ranking</h3><p>Cosine Similarity menghasilkan Top-N rute.</p></div>
+        </div>
+      </div>
+      <span class="footer-note">Retrieval-Based Recommendation Pipeline</span><span class="slide-num">05/12</span>
+    </section>
+
+    <section class="slide" id="slide-6">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="database"></i></div><h2>Dataset & Data Fusion</h2></div>
+        <div class="grid grid-4">
+          <article class="card stat" style="--accent: var(--primary)"><strong>39</strong><span>jalur paper</span></article>
+          <article class="card stat" style="--accent: var(--blue)"><strong>117</strong><span>file GPX mentah lokal</span></article>
+          <article class="card stat" style="--accent: var(--yellow)"><strong>21</strong><span>route aktif lokal</span></article>
+          <article class="card stat" style="--accent: var(--primary-2)"><strong>384</strong><span>dimensi embedding</span></article>
+        </div>
+        <div class="quote" style="margin-top: 26px;"><p>Data numerik GPX seperti jarak, elevasi, grade, dan durasi diubah menjadi narasi agar dapat diproses oleh model bahasa. Deskripsi manual lalu digabung untuk memperkaya konteks medan.</p></div>
+      </div>
+      <span class="footer-note">Dataset & Feature Engineering</span><span class="slide-num">06/12</span>
+    </section>
+
+    <section class="slide" id="slide-7">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="route"></i></div><h2>Tahap Algoritma 1: GPX</h2></div>
+        <div class="grid grid-2">
+          <table class="table">
+            <tr><th>Atribut</th><th>Metode</th></tr>
+            <tr><td>Jarak tempuh</td><td>gpx.length_3d()</td></tr>
+            <tr><td>Kenaikan elevasi</td><td>Σ kenaikan positif</td></tr>
+            <tr><td>Durasi</td><td>(Jarak/5) + (Elevasi/600)</td></tr>
+            <tr><td>Grade</td><td>Elevasi / (Jarak × 1000) × 100</td></tr>
+          </table>
+          <article class="card" style="--accent: var(--primary)"><div class="icon"><i data-lucide="map"></i></div><h3>Output Sistem</h3><p>distance_km, elevation_gain_m, naismith_duration_hour, average_grade_pct, route_coordinates, dan narasi otomatis.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Spatial Feature Extraction</span><span class="slide-num">07/12</span>
+    </section>
+
+    <section class="slide" id="slide-8">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="text-cursor-input"></i></div><h2>Tahap Algoritma 2: Preprocessing</h2></div>
+        <div class="grid grid-3">
+          <article class="card" style="--accent: var(--blue)"><div class="icon"><i data-lucide="eraser"></i></div><h3>Data Cleaning</h3><p>Regex menghapus URL, simbol, karakter noise, dan whitespace berlebih.</p></article>
+          <article class="card" style="--accent: var(--primary)"><div class="icon"><i data-lucide="case-sensitive"></i></div><h3>Case Folding</h3><p>Semua teks dinormalisasi ke lowercase agar variasi kapital tidak memecah makna.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><div class="icon"><i data-lucide="filter"></i></div><h3>Selective Stopword</h3><p>Kata umum dihapus, tetapi kata domain seperti mudah, sulit, landai, curam, dan negasi tetap dipertahankan.</p></article>
+        </div>
+        <p class="lead center">Stemming tidak dipakai karena SBERT memanfaatkan konteks dan morfologi kalimat.</p>
+      </div>
+      <span class="footer-note">Text Preparation</span><span class="slide-num">08/12</span>
+    </section>
+
+    <section class="slide" id="slide-9">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="brain-circuit"></i></div><h2>Tahap Algoritma 3: SBERT</h2></div>
+        <div class="grid grid-2">
+          <article class="card" style="--accent: var(--primary)"><div class="icon"><i data-lucide="box"></i></div><h3>Model</h3><p>paraphrase-multilingual-MiniLM-L12-v2<br>Transformer 12 layers<br>50+ bahasa termasuk Indonesia<br>Output 384 dimensi</p></article>
+          <div class="quote"><p>SBERT mengubah narasi jalur dan preferensi pengguna menjadi dense vector. Sistem dapat mengenali bahwa “jalur landai” dekat dengan “cocok untuk pemula” walau frasanya berbeda.</p></div>
+        </div>
+      </div>
+      <span class="footer-note">Semantic Representation</span><span class="slide-num">09/12</span>
+    </section>
+
+    <section class="slide" id="slide-10">
+      <div class="slide-content center">
+        <div class="section-title" style="justify-content:center"><div class="mark"><i data-lucide="target"></i></div><h2>Cosine Similarity & Ranking</h2></div>
+        <div class="formula">Sim(Q, D) = (Q · D) / (||Q|| × ||D||)</div>
+        <div class="grid grid-3" style="margin-top: 28px; text-align: left;">
+          <article class="card" style="--accent: var(--blue)"><h3>Q</h3><p>Embedding query pengguna.</p></article>
+          <article class="card" style="--accent: var(--primary)"><h3>D</h3><p>Embedding tiap rute pendakian.</p></article>
+          <article class="card" style="--accent: var(--yellow)"><h3>Top-N</h3><p>Rute diurutkan berdasarkan skor similarity tertinggi.</p></article>
+        </div>
+      </div>
+      <span class="footer-note">Matching Engine</span><span class="slide-num">10/12</span>
+    </section>
+
+    <section class="slide" id="slide-11">
+      <div class="slide-content">
+        <div class="section-title"><div class="mark"><i data-lucide="bar-chart-3"></i></div><h2>Hasil Evaluasi</h2></div>
+        <div class="grid grid-4">
+          <article class="card stat" style="--accent: var(--primary)"><strong>0,60</strong><span>Precision@5 SBERT</span></article>
+          <article class="card stat" style="--accent: var(--red)"><strong>0,25</strong><span>Precision@5 TF-IDF</span></article>
+          <article class="card stat" style="--accent: var(--yellow)"><strong>+140%</strong><span>peningkatan</span></article>
+          <article class="card stat" style="--accent: var(--blue)"><strong>1,00</strong><span>P@5 query kontekstual</span></article>
+        </div>
+        <div class="quote" style="margin-top: 28px;"><p>SBERT unggul terutama pada query kontekstual seperti “gunung dengan sabana dan sunrise”, karena mampu menangkap relasi semantik implisit yang sulit ditangkap TF-IDF.</p></div>
+      </div>
+      <span class="footer-note">Evaluation Result</span><span class="slide-num">11/12</span>
+    </section>
+
+    <section class="slide" id="slide-12">
+      <div class="slide-content center">
+        <div class="hero-orb"><i data-lucide="trees"></i></div>
+        <div class="kicker"><i data-lucide="check-circle-2"></i> Closing</div>
+        <h2>Data GPX menjadi rekomendasi yang kontekstual.</h2>
+        <p class="lead">RuteStrip menggabungkan produk, riset, dan kompetisi: sistem rekomendasi nyata, validasi akademik di SISTEMASI SINTA 3, dan capaian Juara 2 GEMASI 2026 kategori Data Science.</p>
+        <div class="author-card">
+          <div><h3>Rama Danadipa Putra Wijaya</h3><p>NIM 23.12.2956</p></div>
+          <div><h3>Publikasi</h3><p>DOI: 10.32520/stmsi.v15i4.6087</p></div>
+        </div>
+      </div>
+      <span class="footer-note">Thank You</span><span class="slide-num">12/12</span>
+    </section>
+  </main>
+
+  <div class="controls">
+    <button id="prev">← Prev</button>
+    <button id="present">Present</button>
+    <button id="next">Next →</button>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    const slides = [...document.querySelectorAll('.slide')];
+    const nav = document.getElementById('nav');
+    const progress = document.getElementById('progress');
+    let current = 0;
+
+    slides.forEach((slide, index) => {
+      const a = document.createElement('a');
+      a.href = `#${slide.id}`;
+      a.addEventListener('click', () => setCurrent(index));
+      nav.appendChild(a);
+    });
+
+    function setCurrent(index) {
+      current = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, i) => slide.classList.toggle('active', i === current));
+      [...nav.children].forEach((dot, i) => dot.classList.toggle('active', i === current));
+      progress.style.width = `${((current + 1) / slides.length) * 100}%`;
+      if (document.body.classList.contains('presenting')) slides[current].scrollIntoView();
+    }
+
+    function fromScroll() {
+      if (document.body.classList.contains('presenting')) return;
+      const mid = window.scrollY + window.innerHeight / 2;
+      const idx = slides.findIndex(slide => mid >= slide.offsetTop && mid < slide.offsetTop + slide.offsetHeight);
+      if (idx >= 0) setCurrent(idx);
+    }
+
+    document.getElementById('prev').onclick = () => setCurrent(current - 1);
+    document.getElementById('next').onclick = () => setCurrent(current + 1);
+    document.getElementById('present').onclick = () => {
+      document.body.classList.toggle('presenting');
+      setCurrent(current);
+    };
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') setCurrent(current + 1);
+      if (e.key === 'ArrowLeft' || e.key === 'PageUp') setCurrent(current - 1);
+      if (e.key === 'Escape') document.body.classList.remove('presenting');
+    });
+
+    window.addEventListener('scroll', fromScroll, { passive: true });
+    setCurrent(0);
+  </script>
+</body>
+</html>

@@ -42,5 +42,11 @@ __pycache__/
 /cache
 /colab/storage
 
-
-
+# Paper and presentation files
+paper-jaic/
+template paper sinta 3/
+presentasi/
+scripts/
+docs/paper_*
+python/output/paper_tables*
+python/%SystemDrive%/
